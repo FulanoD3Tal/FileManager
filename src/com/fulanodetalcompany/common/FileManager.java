@@ -15,6 +15,9 @@
  */
 package com.fulanodetalcompany.common;
 
+import com.fulanodetalcompany.File.FileExtension;
+import com.fulanodetalcompany.File.FileWithoutExtension;
+import com.fulanodetalcompany.File.NotAFileException;
 import java.io.File;
 
 /**
@@ -22,11 +25,25 @@ import java.io.File;
  * @author Roberto Alonso De la Garza Mendoza
  */
 public class FileManager {
+    public final File file;
+    public final FileExtension extensionManager;
     /**
      * Constructor
      */
-    public FileManager() {
+    public FileManager(String file) throws NotAFileException {
+        this.file = new File(file);
+        this.extensionManager = new FileExtension(file);
     }
+    /**
+     * Constructor
+     * @param file
+     * @throws NotAFileException 
+     */
+    public FileManager(File file) throws NotAFileException {
+        this.file = file;
+        this.extensionManager = new FileExtension(file);
+    }
+    
     /**
      * Units
      */
@@ -97,5 +114,24 @@ public class FileManager {
                     break;
         }
         return size;
+    }
+    /**
+     * 
+     * @param extension
+     * @return
+     * @throws NotAFileException 
+     */
+    public File setExtension(String extension) throws NotAFileException
+    {
+        return this.extensionManager.setExtension(this.file, extension);
+    }
+    /**
+     * 
+     * @return
+     * @throws NotAFileException 
+     */
+    public String getExtension() throws NotAFileException, FileWithoutExtension
+    {
+        return this.extensionManager.getExtension(this.file);
     }
 }
